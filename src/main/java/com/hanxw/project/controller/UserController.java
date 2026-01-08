@@ -3,7 +3,9 @@ package com.hanxw.project.controller;
 import com.hanxw.project.common.result.Result;
 import com.hanxw.project.dto.UserQueryDTO;
 import com.hanxw.project.entity.UserEntity;
+import com.hanxw.project.service.OrderService;
 import com.hanxw.project.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +17,10 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/{id}")
     public Result<UserEntity> getUser(@PathVariable Long id) {
@@ -29,5 +30,12 @@ public class UserController {
     @GetMapping("/detail")
     public Result<UserEntity> detail(@Valid UserQueryDTO dto) {
         return Result.success(userService.getUserById(dto.getId()));
+    }
+
+    // 在 UserController 中添加
+    @GetMapping("/{id}/orders")
+    public Result<UserEntity> getUserOrders(@PathVariable Long id) {
+        UserEntity user = orderService.getUserWithOrders(id);
+        return Result.success(user);
     }
 }

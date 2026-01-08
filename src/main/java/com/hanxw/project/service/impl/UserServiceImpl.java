@@ -5,15 +5,13 @@ import com.hanxw.project.common.exception.BizException;
 import com.hanxw.project.entity.UserEntity;
 import com.hanxw.project.mapper.UserMapper;
 import com.hanxw.project.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserMapper userMapper;
-
-    public UserServiceImpl(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public UserEntity getUserById(Long id) {
