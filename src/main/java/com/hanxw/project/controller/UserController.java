@@ -32,10 +32,9 @@ public class UserController {
         return Result.success(userService.getUserById(dto.getId()));
     }
 
-    // 在 UserController 中添加
     @GetMapping("/{id}/orders")
     public Result<UserEntity> getUserOrders(@PathVariable Long id) {
-        UserEntity user = orderService.getUserWithOrders(id);
+        UserEntity user = orderService.selectUserWithOrders(id);
         return Result.success(user);
     }
 }

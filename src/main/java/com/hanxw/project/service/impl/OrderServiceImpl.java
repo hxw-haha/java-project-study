@@ -12,7 +12,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
 
     @Override
-    public UserEntity getUserWithOrders(Long userId) {
+    public UserEntity selectUserWithOrders(Long userId) {
         // MyBatis 执行流程解释：
         // 1. 通过 SqlSessionFactory 获取 SqlSession
         // 2. SqlSession 获取 Mapper 代理对象（动态代理实现接口方法）
@@ -22,4 +22,5 @@ public class OrderServiceImpl implements OrderService {
         // 6. 二级缓存：不同 SqlSession 可共享（需 @CacheNamespace）
         return orderMapper.selectUserWithOrders(userId);
     }
+
 }
