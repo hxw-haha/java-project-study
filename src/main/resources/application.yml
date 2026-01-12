@@ -20,3 +20,13 @@ mybatis:
     map-underscore-to-camel-case: true  # 驼峰映射
     cache-enabled: true  # 开启二级缓存（演示用）
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
