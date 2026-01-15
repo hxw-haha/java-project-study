@@ -5,10 +5,11 @@ public enum ErrorCode {
     SUCCESS(0, "成功"),
     PARAM_ERROR(400, "参数错误"),
     NOT_FOUND(404, "资源不存在"),
-    SYSTEM_ERROR(500, "系统异常");
+    SYSTEM_ERROR(500, "系统异常"),
+    ;
 
     private final int code;
-    private final String message;
+    private String message;
 
     ErrorCode(int code, String message) {
         this.code = code;
@@ -21,5 +22,10 @@ public enum ErrorCode {
 
     public String getMessage() {
         return message;
+    }
+
+    public ErrorCode setMessage(String message) {
+        this.message = message;
+        return this;
     }
 }

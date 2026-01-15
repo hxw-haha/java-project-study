@@ -4,6 +4,7 @@ import com.hanxw.project.common.enums.ErrorCode;
 import com.hanxw.project.common.exception.BizException;
 import com.hanxw.project.entity.UserEntity;
 import com.hanxw.project.mapper.UserMapper;
+import com.hanxw.project.common.redis.lock.RedisDistributedLock;
 import com.hanxw.project.service.CacheService;
 import com.hanxw.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CacheService cacheService;
+
+    @Autowired
+    private RedisDistributedLock redisDistributedLock;
 
     @Override
     public UserEntity getUserById(Long id) {
@@ -41,19 +45,33 @@ public class UserServiceImpl implements UserService {
     public UserEntity getUserDetail(Long userId) {
         String key = USER_CACHE_KEY + userId;
         UserEntity cached = cacheService.get(key, UserEntity.class);
-        if (cached != null) {
-            return cached;
-        }
-        // 缓存未命中
-        UserEntity entity = userMapper.selectById(userId);
-        if (entity == null) {
-            // 缓存空对象避免穿透
-            cacheService.set(key, new UserEntity(), 60, TimeUnit.SECONDS);
+        if (cached != null) return cached;
 
-            throw new BizException(ErrorCode.NOT_FOUND);
+        //缓存重建（防击穿）
+        String lockKey = "lock:user:" + userId;
+        boolean locked = redisDistributedLock.tryLock(lockKey, 0, 5, TimeUnit.SECONDS);
+        if (locked) {
+            try {
+                // double check
+                cached = cacheService.get(key, UserEntity.class);
+                if (cached != null) return cached;
+                UserEntity entity = userMapper.selectById(userId);
+                if (entity == null) return null;
+                cacheService.set(key, entity, 1, TimeUnit.HOURS);
+                return entity;
+            } finally {
+                redisDistributedLock.unlock(lockKey);
+            }
+        } else {
+            // 等待锁释放后从缓存读取
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return cacheService.get(key, UserEntity.class);
         }
-        cacheService.set(key, entity, 1, TimeUnit.HOURS);
-        return entity;
     }
+
 
 }

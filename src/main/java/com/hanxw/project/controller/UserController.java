@@ -1,5 +1,6 @@
 package com.hanxw.project.controller;
 
+import com.hanxw.project.common.LoginRequired;
 import com.hanxw.project.common.result.Result;
 import com.hanxw.project.dto.UserQueryDTO;
 import com.hanxw.project.entity.UserEntity;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
+@LoginRequired
 public class UserController {
 
     @Autowired
