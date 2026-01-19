@@ -1,0 +1,11 @@
+services:
+  nginx:
+    image: nginx:latest          # 或 nginx:stable / nginx:1.27-alpine（推荐 alpine 轻量）
+    container_name: nginx-proxy
+    ports:
+      - "80:80"                  # 浏览器访问 http://localhost
+      # - "443:443"              # 如果以后加 HTTPS，记得加证书卷
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro   # 挂载你的自定义配置
+    restart: unless-stopped
+    depends_on: []               # 如果有其他服务，可加
