@@ -1,0 +1,37 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: provider-order
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/java_project_study?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+# MyBatis Plus
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# Dubbo 配置
+dubbo:
+  application:
+    name: provider-order
+    qos-enable: false
+  registry:
+    address: nacos://localhost:8848
+  protocol:
+    name: dubbo
+    port: 20882
+  consumer:
+    check: false
+  scan:
+    base-packages: com.hanxw.project.order.service
+
+logging:
+  level:
+    com.hanxw.project: DEBUG

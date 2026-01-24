@@ -1,0 +1,4 @@
+# Docker 环境：使用服务名替代 localhost
+dubbo:
+  registry:
+    address: nacos://nacos:8848

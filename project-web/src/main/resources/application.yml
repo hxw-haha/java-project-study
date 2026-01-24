@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: project-web
+
+# Dubbo 配置
+dubbo:
+  application:
+    name: project-web
+    qos-enable: false
+  registry:
+    address: nacos://localhost:8848
+  consumer:
+    check: false
+    timeout: 3000
+    retries: 2
+  scan:
+    base-packages: com.hanxw.project.web
+
+logging:
+  level:
+    com.hanxw.project: DEBUG

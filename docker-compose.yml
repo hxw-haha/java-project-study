@@ -1,11 +1,106 @@
 services:
+  # ==================== Nginx 反向代理 ====================
   nginx:
-    image: nginx:latest          # 或 nginx:stable / nginx:1.27-alpine（推荐 alpine 轻量）
+    image: nginx:latest
     container_name: nginx-proxy
     ports:
-      - "80:80"                  # 浏览器访问 http://localhost
-      # - "443:443"              # 如果以后加 HTTPS，记得加证书卷
+      - "80:80"
     volumes:
-      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro   # 挂载你的自定义配置
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
-    depends_on: []               # 如果有其他服务，可加
+    depends_on:
+      - project-web
+
+  # ==================== Nacos 注册中心 ====================
+  nacos:
+    image: nacos/nacos-server:v2.2.0
+    container_name: nacos
+    environment:
+      - MODE=standalone
+      - PREFER_HOST_MODE=hostname
+      - JVM_XMS=256m
+      - JVM_XMX=256m
+    ports:
+      - "8848:8848"    # Nacos Web UI
+      - "9848:9848"    # gRPC
+      - "9849:9849"    # gRPC
+    restart: unless-stopped
+
+  # ==================== MySQL 数据库 ====================
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: java_project_study
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: unless-stopped
+
+  # ==================== Redis 缓存 ====================
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # ==================== 用户服务提供者（基于现有工程拆分） ====================
+  provider-user:
+    build:
+      context: ./provider-user
+      dockerfile: Dockerfile
+    container_name: provider-user
+    ports:
+      - "8081:8081"
+      - "20881:20881"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - nacos
+      - mysql
+      - redis
+    restart: unless-stopped
+
+  # ==================== 订单服务提供者（基于现有工程拆分） ====================
+  provider-order:
+    build:
+      context: ./provider-order
+      dockerfile: Dockerfile
+    container_name: provider-order
+    ports:
+      - "8082:8082"
+      - "20882:20882"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - nacos
+      - mysql
+      - provider-user
+    restart: unless-stopped
+
+  # ==================== Web网关（基于现有工程拆分） ====================
+  project-web:
+    build:
+      context: ./project-web
+      dockerfile: Dockerfile
+    container_name: project-web
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - nacos
+      - provider-user
+      - provider-order
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+  redis_data:
