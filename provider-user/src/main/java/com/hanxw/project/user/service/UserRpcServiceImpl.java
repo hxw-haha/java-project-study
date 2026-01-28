@@ -5,6 +5,7 @@ import com.hanxw.project.api.dto.UserDTO;
 import com.hanxw.project.common.constants.DubboConstant;
 import com.hanxw.project.common.enums.ErrorCode;
 import com.hanxw.project.common.result.Result;
+import com.hanxw.project.common.service.CacheService;
 import com.hanxw.project.user.entity.UserEntity;
 import com.hanxw.project.user.mapper.UserMapper;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -42,7 +43,7 @@ public class UserRpcServiceImpl implements UserRpcService {
     private UserMapper userMapper;
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private CacheService cacheService;
 
     @Override
     public Result<UserDTO> getUserById(Long id) {
@@ -54,7 +55,7 @@ public class UserRpcServiceImpl implements UserRpcService {
 
         // 先查缓存
         String cacheKey = USER_CACHE_KEY + id;
-        UserDTO cached = (UserDTO) redisTemplate.opsForValue().get(cacheKey);
+        UserDTO cached = cacheService.get(cacheKey,UserDTO.class);
         if (cached != null) {
             log.info("命中缓存, id={}", id);
             return Result.success(cached);
@@ -68,7 +69,7 @@ public class UserRpcServiceImpl implements UserRpcService {
 
         // 转换并缓存
         UserDTO dto = convertToDTO(entity);
-        redisTemplate.opsForValue().set(cacheKey, dto, 1, TimeUnit.HOURS);
+        cacheService.set(cacheKey, dto, 1, TimeUnit.HOURS);
 
         return Result.success(dto);
     }
@@ -92,7 +93,7 @@ public class UserRpcServiceImpl implements UserRpcService {
 
         // 删除缓存
         String cacheKey = USER_CACHE_KEY + userDTO.getId();
-        redisTemplate.delete(cacheKey);
+        cacheService.delete(cacheKey);
 
         return Result.success(true);
     }
