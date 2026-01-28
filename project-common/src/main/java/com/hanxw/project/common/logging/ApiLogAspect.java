@@ -1,4 +1,4 @@
-package com.hanxw.project.common.aspect;
+package com.hanxw.project.common.logging;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -32,3 +32,4 @@ public class ApiLogAspect {
         return result;
     }
 }
+

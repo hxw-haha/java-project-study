@@ -1,4 +1,4 @@
-package com.hanxw.project.common.service;
+package com.hanxw.project.common.redis.cache;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -30,3 +30,4 @@ public class CacheService {
         redisTemplate.delete(key);
     }
 }
+

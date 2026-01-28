@@ -1,4 +1,4 @@
-package com.hanxw.project.common.redis.login;
+package com.hanxw.project.common.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,9 +21,6 @@ public class JwtUtil {
 
     private static final Key KEY = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
-    /**
-     * 生成 Token
-     */
     public static String generate(Long userId) {
         return Jwts.builder()
                 .setSubject(userId.toString())
@@ -33,9 +30,6 @@ public class JwtUtil {
                 .compact();
     }
 
-    /**
-     * 解析 Token，获取用户ID
-     */
     public static Long parseUserId(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(KEY)
@@ -45,3 +39,4 @@ public class JwtUtil {
         return Long.parseLong(claims.getSubject());
     }
 }
+
