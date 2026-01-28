@@ -1,4 +1,4 @@
-package com.hanxw.project.common.context;
+package com.hanxw.project.common.web.context;
 
 /**
  * 请求上下文（ThreadLocal）
@@ -20,3 +20,4 @@ public class RequestContext {
         USER_ID.remove();
     }
 }
+

@@ -1,4 +1,4 @@
-package com.hanxw.project.common.config;
+package com.hanxw.project.common.mybatis;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * MyBatis Plus 配置
- * 
+ *
  * 注意：@MapperScan 需要在各模块的启动类上配置，因为各模块的 mapper 包路径不同
  * - provider-user: @MapperScan("com.hanxw.project.user.mapper")
  * - provider-order: @MapperScan("com.hanxw.project.order.mapper")
@@ -22,8 +22,8 @@ public class MybatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        // 分页插件（必配）
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
     }
 }
+

@@ -1,6 +1,6 @@
 package com.hanxw.project.web.config;
 
-import com.hanxw.project.common.interceptor.AuthInterceptor;
+import com.hanxw.project.common.web.interceptor.AuthInterceptor;
 import com.hanxw.project.common.redis.limiter.RateLimiterInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

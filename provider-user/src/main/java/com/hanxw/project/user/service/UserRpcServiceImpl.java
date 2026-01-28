@@ -5,7 +5,7 @@ import com.hanxw.project.api.dto.UserDTO;
 import com.hanxw.project.common.constants.DubboConstant;
 import com.hanxw.project.common.enums.ErrorCode;
 import com.hanxw.project.common.result.Result;
-import com.hanxw.project.common.service.CacheService;
+import com.hanxw.project.common.redis.cache.CacheService;
 import com.hanxw.project.user.entity.UserEntity;
 import com.hanxw.project.user.mapper.UserMapper;
 import org.apache.dubbo.config.annotation.DubboService;
