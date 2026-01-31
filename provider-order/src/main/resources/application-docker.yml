@@ -1,7 +1,7 @@
 # Docker 环境：使用服务名替代 localhost
 spring:
-  datasource:
-    url: jdbc:mysql://mysql:3306/java_project_study?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+  redis:
+    host: redis
 
 dubbo:
   registry:

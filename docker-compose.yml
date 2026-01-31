@@ -27,23 +27,23 @@ services:
     restart: unless-stopped
 
   # ==================== MySQL 数据库 ====================
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: java_project_study
-      TZ: Asia/Shanghai
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    restart: unless-stopped
+#  mysql:
+#    image: mysql:8.0
+#    container_name: mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: java_project_study
+#      TZ: Asia/Shanghai
+#    ports:
+#      - "3306:3306"
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+#    restart: unless-stopped
 
   # ==================== Redis 缓存 ====================
   redis:
-    image: redis:7-alpine
+    image: redis
     container_name: redis
     ports:
       - "6379:6379"
@@ -64,7 +64,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - nacos
-      - mysql
+#      - mysql
       - redis
     restart: unless-stopped
 
@@ -81,7 +81,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - nacos
-      - mysql
+#      - mysql
       - provider-user
     restart: unless-stopped
 
