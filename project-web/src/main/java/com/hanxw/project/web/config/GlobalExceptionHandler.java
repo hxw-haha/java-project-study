@@ -6,6 +6,7 @@ import com.hanxw.project.common.result.Result;
 import org.apache.dubbo.rpc.RpcException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -21,6 +22,13 @@ public class GlobalExceptionHandler {
     public Result<?> handleBizException(BizException e) {
         log.warn("业务异常: code={}, msg={}", e.getCode(), e.getMsg());
         return Result.fail(e.getCode(), e.getMsg());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<Void> handleValidException(MethodArgumentNotValidException e) {
+        String msg = e.getBindingResult().getFieldError().getDefaultMessage();
+        log.warn("参数校验异常: msg={}", msg);
+        return Result.fail(400, msg);
     }
 
     @ExceptionHandler(RpcException.class)

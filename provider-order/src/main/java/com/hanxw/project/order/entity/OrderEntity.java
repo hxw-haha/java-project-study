@@ -15,7 +15,7 @@ import java.util.List;
  * 订单实体（复用原有结构）
  */
 @Data
-@TableName("order")
+@TableName("orders")
 public class OrderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
