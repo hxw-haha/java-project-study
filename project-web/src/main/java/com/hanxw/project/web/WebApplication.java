@@ -3,6 +3,7 @@ package com.hanxw.project.web;
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -10,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 
  * 基于原有 Controller 改造
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableDubbo
 @ComponentScan(basePackages = {
         "com.hanxw.project"   // 扫描整个项目根包
