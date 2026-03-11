@@ -51,6 +51,21 @@ services:
       - redis_data:/data
     restart: unless-stopped
 
+  # ==================== pgvector（PostgreSQL 向量数据库） ====================
+  pgvector-db:
+    image: pgvector/pgvector:pg16
+    container_name: pgvector-db
+    environment:
+      POSTGRES_DB: pgvector
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      TZ: Asia/Shanghai
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
   # ==================== 用户服务提供者（基于现有工程拆分） ====================
   provider-user:
     build:
@@ -66,6 +81,7 @@ services:
       - nacos
 #      - mysql
       - redis
+      - pgvector-db
     restart: unless-stopped
 
   # ==================== 订单服务提供者（基于现有工程拆分） ====================
@@ -83,6 +99,7 @@ services:
       - nacos
 #      - mysql
       - provider-user
+      - pgvector-db
     restart: unless-stopped
 
   # ==================== Web网关（基于现有工程拆分） ====================
@@ -104,3 +121,4 @@ services:
 volumes:
   mysql_data:
   redis_data:
+  pgvector_data:

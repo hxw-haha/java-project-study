@@ -6,3 +6,14 @@ spring:
 dubbo:
   registry:
     address: nacos://nacos:8848
+
+# pgvector（PostgreSQL）连接信息（供向量检索/存储使用）
+pgvector:
+  datasource:
+    host: pgvector-db
+    port: 5432
+    database: pgvector
+    username: postgres
+    password: postgres
+    # JDBC URL（如需直接注入 DataSource 可使用该值）
+    url: jdbc:postgresql://pgvector-db:5432/pgvector
