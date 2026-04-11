@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>抵押房产下户核验报告</title>
+    <style>
+        body {
+            font-family: 'Alibaba PuHuiTi', sans-serif;
+            font-size: 12px;
+            margin: 25px;
+            line-height: 1.55;
+        }
+        .title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0 25px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        td {
+            border: 1px solid #000;
+            padding: 7px 6px;
+            vertical-align: middle;
+            word-break: break-all;
+        }
+        .center { text-align: center; }
+        .left { text-align: left; }
+        .red { color: red; }
+        .section {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+        .signature { height: 65px; max-width: 200px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+<div class="title">
+    上海农商银行“个人经营快贷”业务<br/>
+    抵押房产下户核验报告
+</div>
+
+<table>
+    <!-- 抵押物基本信息 -->
+    <tr>
+        <td colspan="5" class="center section">抵押物基本信息</td>
+    </tr>
+    <tr>
+        <td class="center">下户核验日期</td>
+        <td class="center red">[下户当天日期]</td>
+        <td class="center">抵押物类型</td>
+        <td colspan="2" class="center">
+            住宅/商铺/厂房/办公楼<br/>
+            <span class="red">根据产权证勾选</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="center">抵押房产地址</td>
+        <td colspan="4" class="center red">[产证上地址]</td>
+    </tr>
+    <tr>
+        <td class="center">小区名称</td>
+        <td class="center red">[填写小区名称]</td>
+        <td class="center">是否有电梯</td>
+        <td colspan="2" class="center">
+            □ 是　□ 否<br/>
+            <span class="red">根据实际情况勾选</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="center">抵押房产所在楼层</td>
+        <td class="center red">[根据产权证上填写]</td>
+        <td class="center">房屋总楼层</td>
+        <td colspan="2" class="center red">[根据产权证上填写]</td>
+    </tr>
+    <tr>
+        <td class="center">抵押房产状态</td>
+        <td colspan="2" class="center">
+            空置/自用/出租/其他请说明<br/>
+            <span class="red">根据实际情况勾选</span>
+        </td>
+        <td class="center">备注：</td>
+        <td class="center">
+            含有地下/花园/阁楼面积 XX 平方米<br/>
+            <span class="red">产证上有标明额外面积的需填写</span>
+        </td>
+    </tr>
+
+    <!-- 抵押物下户核验情况 -->
+    <tr>
+        <td colspan="5" class="center section">抵押物下户核验情况</td>
+    </tr>
+    <tr>
+        <td colspan="4" class="left">
+            1、是否已上门对抵押房产进行实地调查？
+        </td>
+        <td class="center">□ 是　□ 否</td>
+    </tr>
+    <tr>
+        <td colspan="4" class="left">
+            2、抵押房产门头地址是否与抵押物产证地址一致？
+        </td>
+        <td class="center">□ 是　□ 否</td>
+    </tr>
+    <tr>
+        <td colspan="4" class="left">
+            3、抵押房产是否已出租？<br/>
+            如抵押物已出租，该抵押物的租户为：
+        </td>
+        <td class="center">□ 是　□ 否</td>
+    </tr>
+    <tr>
+        <td colspan="4" class="left">
+            4、抵押房产是否存在重大结构变动？<br/>
+            如存在重大结构变动，请简要描述：
+        </td>
+        <td class="center">□ 是　□ 否</td>
+    </tr>
+    <tr>
+        <td colspan="4" class="left">
+            5、抵押房产处置时是否存在无法腾空的风险？<br/>
+            如存在无法腾空的风险，请简要描述：
+        </td>
+        <td class="center">□ 是　□ 否</td>
+    </tr>
+
+    <!-- 结论部分 -->
+    <tr>
+        <td colspan="5" class="center section">下户核验意见及结论</td>
+    </tr>
+    <tr>
+        <td colspan="5" style="height:85px;" class="left">
+            下户核验人员意见：<br/><br/>
+            抵押物下户核验情况
+            <span class="red">□ 符合　□ 不符合</span>
+            个人经营快贷抵押物准入要求
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">下户核验人员姓名：</td>
+        <td colspan="3" class="center">
+            <img src="data:image/png;base64,[SIGNATURE_BASE64]" class="signature" alt="签名"/>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" class="center">
+            本人承诺以上调查及填写信息真实有效。
+        </td>
+    </tr>
+</table>
+</body>
+</html>
