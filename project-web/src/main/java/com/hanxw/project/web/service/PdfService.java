@@ -48,13 +48,13 @@ public class PdfService {
                     .toStream(outputStream);
 
             // ==================== 正确加载中文字体（推荐写法） ====================
-            URL fontUrl = getClass().getClassLoader().getResource("fonts/simhei.ttf");
+            URL fontUrl = getClass().getClassLoader().getResource("fonts/Alibaba-PuHuiTi-Regular.ttf");
             if (fontUrl == null) {
-                throw new RuntimeException("字体文件未找到！请确认 simhei.ttf 已放在 src/main/resources/fonts/ 目录下");
+                throw new RuntimeException("字体文件未找到！请确认 Alibaba-PuHuiTi-Regular.ttf 已放在 src/main/resources/fonts/ 目录下");
             }
 
             // 把 classpath 中的字体复制到临时文件（解决 jar 包和 target/classes 路径问题）
-            File tempFontFile = File.createTempFile("simhei-", ".ttf");
+            File tempFontFile = File.createTempFile("Alibaba-PuHuiTi-Regular-", ".ttf");
             tempFontFile.deleteOnExit();  // JVM 退出时自动删除临时文件
 
             try (InputStream is = fontUrl.openStream();
@@ -67,7 +67,7 @@ public class PdfService {
             }
 
             // 关键：字体名称必须和 HTML CSS 中的 font-family 完全一致
-            builder.useFont(tempFontFile, "SimHei");
+            builder.useFont(tempFontFile, "Alibaba PuHuiTi");
             // =================================================================
 
             builder.run();
@@ -86,7 +86,7 @@ public class PdfService {
                 "    <title>抵押房产下户核验报告</title>\n" +
                 "    <style>\n" +
                 "        body {\n" +
-                "            font-family: 'SimHei', sans-serif;\n" +
+                "            font-family: 'Alibaba PuHuiTi', sans-serif;\n" +
                 "            font-size: 12px;\n" +
                 "            margin: 25px;\n" +
                 "            line-height: 1.55;\n" +
