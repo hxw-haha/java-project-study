@@ -4,6 +4,28 @@ server:
 spring:
   application:
     name: project-web
+  ai:
+    mcp:
+      server:
+        # 明确启用
+        enabled: true
+        name: dubbo-mcp-server
+        version: 1.0.0
+        instructions: "这是一个基于 Dubbo 的 MCP Server，提供用户查询和订单创建能力。所有工具都通过 Dubbo RPC 调用后端服务。"
+        # 明确指定，推荐 SYNC
+        type: SYNC
+        protocol: STREAMABLE
+        # 支持本地 STDIO 调试
+        stdio: true
+        # Streamable HTTP 配置
+        streamable-http:
+          mcp-endpoint: /mcp
+          # 可选，保持长连接
+          keep-alive-interval: 30s
+        # 变更通知（推荐开启）
+        tool-change-notification: true
+        # resource-change-notification: true   # 后续需要资源时再开启
+        # prompt-change-notification: true     # 后续需要 Prompt 时再开启
 
 # Dubbo 配置
 dubbo:
